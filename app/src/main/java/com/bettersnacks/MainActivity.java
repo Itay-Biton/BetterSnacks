@@ -1,0 +1,53 @@
+package com.bettersnacks;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.better_snacks.BaseSnackbar;
+import com.better_snacks.InfoSnackbar;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+
+        InfoSnackbar newBar = new InfoSnackbar.Builder(this)
+                .message("hello hello hello hello")
+                .actionText("Infoing")
+                .duration(4000)
+                .icon(getDrawable(R.drawable.ic_launcher_background))
+                .textColor(Color.GREEN)
+                .backgroundColor(Color.DKGRAY)
+                .actionTextColor(Color.RED)
+                .layoutDirection(View.LAYOUT_DIRECTION_RTL)
+                .animation(BaseSnackbar.AnimationType.FADE_IN)
+                .soundOnShow(true)
+                .onConfirm(()->{
+                    Log.d("pttt", "hey");
+                })
+                .build();
+        newBar.show();
+
+
+        //new UndoSnackbar.Builder(this).onUndo(()->{}).show();
+
+
+    }
+}
