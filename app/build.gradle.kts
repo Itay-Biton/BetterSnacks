@@ -43,5 +43,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(project(":Better_Snacks"))
+    implementation (libs.bettersnacks)
 }
