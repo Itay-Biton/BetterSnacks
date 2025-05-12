@@ -16,8 +16,31 @@
 ---
 
 ## ⚙️ Installation
+**Add the library dependency**:
 
-To integrate BetterSnacks into your Android project, simply copy the `com.better_snacks` package directly into your project's source directories. Please ensure that your application is utilizing Material Components for Android.
+Ensure that your project is configured to fetch the library from JitPack. Update your **`settings.gradle`** and **`build.gradle`** as follows:
+#### **`settings.gradle`**
+```kotlin
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+      google()
+      mavenCentral()
+      maven {
+          url = uri("https://jitpack.io")
+      }
+  }
+}
+```   
+#### **`build.gradle` (App Module)**
+Add the library dependency to your app module's dependencies block:
+```kotlin
+dependencies {
+  implementation("com.github.Itay-Biton:BetterSnacks:v1.0.0")
+}
+```
+Sync your Gradle project after adding these changes.
+
 
 ---
 
@@ -43,7 +66,7 @@ new UndoSnackbar.Builder(this) // Use 'this' if calling from an Activity
     .show();
 ````
 
-### 2\. Info Snackbar
+### 2. Info Snackbar
 
 ```java
 // If you are within a Fragment or have a specific View:
