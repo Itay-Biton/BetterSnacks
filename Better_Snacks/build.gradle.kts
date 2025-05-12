@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.maven.publish)
 }
 
 android {
@@ -35,4 +36,19 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.ItayBiton"
+                artifactId = "BetterSnacks"
+                version = "v1.0.0"
+                artifact(tasks.getByName("bundleReleaseAar"))
+
+                // Add dependencies to the Maven publication configuration (api or implementation)
+            }
+        }
+    }
 }
