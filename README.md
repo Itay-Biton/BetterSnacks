@@ -40,7 +40,7 @@ Add the library dependency to your app module's dependencies block:
 
 ```kotlin
 dependencies {
-  implementation("com.github.Itay-Biton:BetterSnacks:v1.0.0")
+  implementation("com.github.Itay-Biton:BetterSnacks:tag")
 }
 ```
 
