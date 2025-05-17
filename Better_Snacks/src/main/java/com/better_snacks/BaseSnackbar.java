@@ -5,13 +5,16 @@ import static android.view.View.VISIBLE;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
@@ -40,6 +43,11 @@ public abstract class BaseSnackbar {
     protected final long vibrationDuration;
     protected final boolean soundOnShow;
     protected final Integer soundResId;
+    protected final int cornerRadius;
+    protected final int[] gradientColors;
+    protected final GradientDrawable.Orientation gradientOrientation;
+    protected final int borderWidth;
+    protected final int borderColor;
 
     protected BaseSnackbar(Builder builder) {
         this.view = builder.view;
@@ -57,6 +65,11 @@ public abstract class BaseSnackbar {
         this.vibrationDuration = builder.vibrationDuration;
         this.soundOnShow = builder.soundOnShow;
         this.soundResId = builder.soundResId;
+        this.cornerRadius = builder.cornerRadius;
+        this.gradientColors = builder.gradientColors;
+        this.gradientOrientation = builder.gradientOrientation;
+        this.borderWidth = builder.borderWidth;
+        this.borderColor = builder.borderColor;
     }
 
     protected abstract void show();
@@ -73,10 +86,6 @@ public abstract class BaseSnackbar {
 
         snackbarView.setLayoutDirection(resolvedDirection);
 
-        if (backgroundColor != null) {
-            snackbarView.setBackgroundColor(backgroundColor);
-        }
-
         TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
         TextView actionView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_action);
 
@@ -89,6 +98,11 @@ public abstract class BaseSnackbar {
         if (actionTextColor != null) {
             actionView.setTextColor(actionTextColor);
         }
+
+        ViewGroup contentLayout = (ViewGroup) textView.getParent();
+        GradientDrawable background = getBackground();
+        contentLayout.setBackground(background);
+        snackbarView.setBackground(null);
 
         if (icon != null) {
             int iconSize = (int) (textView.getLineHeight() * 0.9f);
@@ -117,6 +131,23 @@ public abstract class BaseSnackbar {
         }
         else
             snackbar.show();
+    }
+
+    private GradientDrawable getBackground() {
+        GradientDrawable background = new GradientDrawable();
+        background.setCornerRadius(cornerRadius);
+        if (gradientColors != null && gradientColors.length >= 2) {
+            background.setOrientation(gradientOrientation != null
+                    ? gradientOrientation
+                    : GradientDrawable.Orientation.LEFT_RIGHT);
+            background.setColors(gradientColors);
+        } else {
+            background.setColor(backgroundColor != null ? backgroundColor : Color.DKGRAY);
+        }
+        if (borderWidth > 0 && borderColor != -1) {
+            background.setStroke(borderWidth, borderColor);
+        }
+        return background;
     }
 
     protected void triggerVibration(Context context) {
@@ -187,6 +218,11 @@ public abstract class BaseSnackbar {
         private long vibrationDuration = 150;
         private boolean soundOnShow = false;
         private Integer soundResId;
+        private int cornerRadius;
+        private int[] gradientColors;
+        private GradientDrawable.Orientation gradientOrientation;
+        private int borderWidth;
+        private int borderColor = -1;
 
         public Builder(View view) {
             this.view = view;
@@ -311,6 +347,39 @@ public abstract class BaseSnackbar {
          */
         public T sound(int rawResId) {
             this.soundResId = rawResId;
+            return self();
+        }
+
+        /**
+         * Sets the corner radius of the snackbar.
+         * @param radius pixel radius int.
+         */
+        public T cornerRadius(int radius) {
+            this.cornerRadius = radius;
+            return self();
+        }
+
+        /**
+         * Sets a gradient background for the Snackbar.
+         * @param gradientColors        An array of colors to be used in the gradient.
+         *                              Must contain at least two colors.
+         * @param gradientOrientation   The direction/orientation of the gradient
+         *                              (e.g., LEFT_RIGHT, TOP_BOTTOM).
+         */
+        public T gradient(int[] gradientColors, GradientDrawable.Orientation gradientOrientation) {
+            this.gradientColors = gradientColors;
+            this.gradientOrientation = gradientOrientation;
+            return self();
+        }
+
+        /**
+         * Sets a border (stroke) around the Snackbar background.
+         * @param borderColor The color of the border.
+         * @param borderWidth The width of the border in pixels.
+         */
+        public T border(int borderColor, int borderWidth) {
+            this.borderColor = borderColor;
+            this.borderWidth = borderWidth;
             return self();
         }
 

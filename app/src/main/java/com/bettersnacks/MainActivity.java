@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.better_snacks.BaseSnackbar;
-import com.better_snacks.InfoSnackbar;
+import com.better_snacks.TimedSnackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,25 +28,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        InfoSnackbar newBar = new InfoSnackbar.Builder(this)
-                .message("hello hello hello hello")
-                .actionText("Infoing")
-                .icon(getDrawable(R.drawable.ic_launcher_foreground))
-                .textColor(Color.GREEN)
-                .backgroundColor(Color.DKGRAY)
-                .actionTextColor(Color.RED)
-                .layoutDirection(View.LAYOUT_DIRECTION_RTL)
-                .animation(BaseSnackbar.AnimationType.FADE_IN)
-                .soundOnShow(true)
-                .onConfirm(()->{
-                    Log.d("pttt", "hey");
+        TimedSnackbar.Builder builder = new TimedSnackbar.Builder(this)
+                .message("שומר נתונים...")
+                .actionText("בטל")
+                .onAction(() -> {
+                    // Logic to execute when the cancel button is clicked
+                    Log.i("BetterSnacks", "Saving cancelled");
                 })
-                .build();
-        newBar.show();
+                .onTimeout(() -> {
+                    // Code to run when the snackbar times out
+                    Toast.makeText(this, "Data saved automatically", Toast.LENGTH_SHORT).show();
+                })
+                .duration(5000) // Show for 5 seconds
+                .layoutDirection(View.LAYOUT_DIRECTION_RTL) // Example for RTL layout
+                .backgroundColor(Color.BLACK)
+                .textColor(Color.GREEN)
+                .actionTextColor(Color.RED);
 
+        TimedSnackbar timedSnackbar = builder.border(Color.WHITE, 3).build();
 
-        //new UndoSnackbar.Builder(this).onUndo(()->{}).show();
-
-
+        timedSnackbar.show();
     }
 }

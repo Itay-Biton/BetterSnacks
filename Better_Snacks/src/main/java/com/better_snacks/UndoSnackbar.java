@@ -17,9 +17,8 @@ public class UndoSnackbar extends BaseSnackbar {
     @Override
     public void show() {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(actionText, v -> {
-            if (onUndo != null) onUndo.run();
-        });
+        if (onUndo != null)
+            snackbar.setAction(actionText, v -> onUndo.run());
         applyVisuals(snackbar);
     }
 

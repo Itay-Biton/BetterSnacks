@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.packaging.fromProjectProperties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -43,5 +42,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation (libs.bettersnacks)
+    implementation(project(":Better_Snacks"))
+    //implementation (libs.bettersnacks)
 }

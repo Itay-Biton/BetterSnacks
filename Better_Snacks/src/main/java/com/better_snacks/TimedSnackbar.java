@@ -21,9 +21,8 @@ public class TimedSnackbar extends BaseSnackbar {
     @Override
     public void show() {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(actionText, v -> {
-            if (onAction != null) onAction.run();
-        });
+        if (onAction != null)
+            snackbar.setAction(actionText, v -> onAction.run());
 
         if (onTimeout != null) {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {

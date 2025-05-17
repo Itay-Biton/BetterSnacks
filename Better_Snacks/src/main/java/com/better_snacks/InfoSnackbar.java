@@ -17,9 +17,9 @@ public class InfoSnackbar extends BaseSnackbar {
     @Override
     public void show() {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(actionText, v -> {
-            if (onConfirm != null) onConfirm.run();
-        });
+        if (onConfirm != null)
+            snackbar.setAction(actionText, v -> onConfirm.run());
+
         applyVisuals(snackbar);
     }
 
