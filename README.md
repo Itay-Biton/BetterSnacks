@@ -76,7 +76,7 @@ new UndoSnackbar.Builder(this) // Use 'this' if calling from an Activity
 
 <p align="center">Undo Snackbar with Custom Appearance and Effects</p>
 <p align="center">
-  <img src="./Screenshots/UndoCombined.png" alt="undo snackbar combined" width="200"/>
+  <img src="./Screenshots/UndoCombined.png" alt="undo snackbar combined" width="400"/>
 </p>
 
 ### 2. Info Snackbar with Gradient and Icon
@@ -101,7 +101,7 @@ new InfoSnackbar.Builder(rootView)
 
 <p align="center">Info Snackbar with Gradient and Icon</p>
 <p align="center">
-  <img src="./Screenshots/InfoCombined.png" alt="info snackbar combined" width="200"/>
+  <img src="./Screenshots/InfoCombined.png" alt="info snackbar combined" width="400"/>
 </p>
 
 ### 3. Timed Snackbar with Border and RTL Support
@@ -129,7 +129,7 @@ new TimedSnackbar.Builder(findViewById(R.id.your_coordinator_layout)) // Ensure 
 
 <p align="center">Timed Snackbar with Border and RTL Support</p>
 <p align="center">
-  <img src="./Screenshots/TimedCombinedRTL.png" alt="timed snackbar combined rtl" width="200"/>
+  <img src="./Screenshots/TimedCombinedRTL.png" alt="timed snackbar combined rtl" width="400"/>
 </p>
 
 ---
